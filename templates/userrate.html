@@ -1,0 +1,154 @@
+{% extends 'component/base.html' %}
+{% block content %}
+<div class="hero user-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+					<h1>{{user.username}} 的主页</h1>
+					<ul class="breadcumb">
+						<li class="active"><a href="#">Home</a></li>
+						<li> <span class="ion-ios-arrow-right"></span>我的评论</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="page-single">
+	<div class="container">
+		<div class="row ipad-width2">
+			<div class="col-md-3 col-sm-12 col-xs-12">
+				<div class="user-information">
+					<div class="user-img">
+						<a href="#"><img src="https://haintheme.com/demo/html/bustter/images/uploads/user-img.png" alt=""><br></a>
+						<a href="#" class="redbtn">更换头像</a>
+					</div>
+					<div class="user-fav">
+						<p>账号信息</p>
+						<ul>
+							<li><a href="userprofile.html">个人主页</a></li>
+							<li><a href="userfavoritelist.html">我的喜欢</a></li>
+							<li class="active"><a href="/user/comments/">我的评论</a></li>
+						</ul>
+					</div>
+                    <div class="user-fav">
+						<p>Others</p>
+						<ul>
+							<li><a href="#">Change password</a></li>
+							<li><a href="#">Log out</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-9 col-sm-12 col-xs-12">
+				<div class="topbar-filter">
+					<p>Found <span>{{ count }} rates</span> in total</p>
+					<label>Sort by:</label>
+					<select>
+						<option value="range">-- Choose option --</option>
+						<option value="saab">-- Choose option 2--</option>
+					</select>
+				</div>
+                <div id="comment-item">
+                    {% for item in data %}
+                        <div class="movie-item-style-2 userrate">
+                            <img src="/static/imgs/small/p{{ item.mvid }}.jpg" alt=""
+                                 style="width: 170px;height: 260px;">
+                            <div class="mv-item-infor">
+                                <h6><a href="#">{{ item.movie }}</a></h6>
+                                <p class="time sm-text">your rate:</p>
+                                <p class="rate"><i class="ion-android-star"></i><span>{{ item.rate }}</span> /10</p>
+                                <p class="time sm-text">your reviews:</p>
+                                <p class="time sm">{{ item.time }}</p>
+                                <p>“{{ item.comment }}”</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+				<div class="topbar-filter">
+					<label>Movies per page:</label>
+					<select>
+						<option value="range">20 Movies</option>
+						<option value="saab">10 Movies</option>
+					</select>
+					<div class="pagination2">
+						<span>Page {{ current_page }} of 1:</span>
+                        {% for i in page_range %}
+                            {% if i == current_page %}
+                                <a class="active">{{ i }}</a>
+                            {% else %}
+                                <a href="javascript:(0)" class="click_page">{{ i }}</a>
+                            {% endif %}
+                        {% endfor %}
+						<a href="#"><i class="ion-arrow-right-b"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+    <script src="/static/js/jquery-3.4.1.js"></script>
+    <script src="/static/js/jquery.js"></script>
+    <script>
+        $("body").on('click', '.click_page', function () {
+            let page = $(this).html();
+            if (page === '&lt;&lt;') {
+                page = '1';
+            }
+            if (page === '&gt;&gt;') {
+                page = '{{ page_num }}';
+            }
+            //console.log(page);
+            let url = '/moviesinglepage/' +{{ movie.id }};
+            $.ajax({
+                type: 'get',
+                url: url,
+                data: {'page': page},
+                success: function (data) {
+                    $("#comment-content").empty();
+                    //因为这里data内部仍然是一个dict，所以要用data.cmt取出其中的cmt属性
+                    $.each(data.cmt, function (index, item) {
+                        //console.log(item.rate);
+                        let s1 = '<div class="mv-user-review-item"><div class="user-infor"><div><h3>' + item.id + '</h3><div class="no-star" id="no-star">';
+                        for (let i = 1; i <= item.rate; i++) {
+                            //console.log("star");
+                            s1 = s1 + '<i class="ion-android-star"></i>';
+                        }
+                        for (let i = item.rate + 1; i <= 10; i++) {
+                            //console.log("nostar");
+                            s1 = s1 + '<i class="ion-android-star last"></i>';
+                        }
+                        s1 = s1 + '</div><p class="time">';
+                        t = new Date(item.time).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+                        s1 = s1 + t + "</p></div></div><p>" + item.comment + "</p></div>";
+                        //console.log(s1);
+                        $("#comment-content").append(s1);
+                    });
+                    $("#page-nav").html('');
+                    //console.log(typeof(page));
+                    let s = '';
+                    if (Number(page) > 1) {
+                        $("#page-nav").append('<a href="javascript:(0)" class="click_page">&lt;&lt;</a>');
+                    }
+                    $.each(data.page_range, function (index, i) {
+                        //console.log(typeof(i));
+
+                        if (i === Number(page)) {
+                            s = '<a href="#" class="page-active" style="color: #dcf836;">' + i + '</a>';
+                        } else {
+                            s = '<a href="javascript:(0)" class="click_page">' + i + '</a>';
+                        }
+                        console.log(s);
+                        $("#page-nav").append(s);
+                    });
+                    if (Number(page) < {{ page_num }}) {
+                        $("#page-nav").append('<a href="javascript:(0)" class="click_page">&gt;&gt;</a>');
+                    }
+                    $("#active").addClass("active");
+                }
+            });
+        });
+    </script>
+<!-- footer section-->
+{% endblock %}

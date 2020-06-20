@@ -1,0 +1,182 @@
+{% extends 'component/base.html' %}
+{% block content %}
+<div class="hero common-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+					<h1> 影评详情 </h1>
+					<ul class="breadcumb">
+						<li class="active"><a href="#">Home</a></li>
+						<li> <span class="ion-ios-arrow-right"></span> 影评详情 </li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- blog detail section-->
+<div class="page-single">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-9 col-sm-12 col-xs-12">
+				<div class="blog-detail-ct">
+					<h1>{{ blog.title }}</h1>
+					<span class="time">{{ blog.create_time }}</span>
+						{{ blog.body|safe }}
+					<div class="flex-it share-tag">
+						<div class="social-link">
+							<h4>Share it</h4>
+							<a href="#"><i class="ion-social-facebook"></i></a>
+							<a href="#"><i class="ion-social-twitter"></i></a>
+							<a href="#"><i class="ion-social-googleplus"></i></a>
+							<a href="#"><i class="ion-social-pinterest"></i></a>
+							<a href="#"><i class="ion-social-linkedin"></i></a>
+						</div>
+						<div class="right-it">
+							<h4>Tags</h4>
+							<a href="#">Gray,</a>
+							<a href="#">Film,</a>
+							<a href="#">Poster</a>
+						</div>
+					</div>
+					<!-- comment items -->
+					<div class="comments">
+						<h4>共 4 条评论</h4>
+						<div class="cmt-item flex-it">
+							<img src="https://haintheme.com/demo/html/bustter/images/uploads/author.png" alt="">
+							<div class="author-infor">
+								<div class="flex-it2">
+									<h6><a href="#">user1</a></h6> <span class="time">2020-05-03 12:32:33</span>
+								</div>
+								<p>imdb排行在前几名，有人遇见新的环境时都会看这部电影来给自己打气，当然对人影响很大了。 :-)，放心吧，人都会不断成长的，只有有成长的信念，就如安迪有自由的信念。</p>
+								<p><a class="rep-btn" href="javascript:(0)">+ 回复</a></p>
+							</div>
+						</div>
+						<div class="cmt-item flex-it reply">
+							<img src="https://haintheme.com/demo/html/bustter/images/uploads/author2.png" alt="">
+							<div class="author-infor">
+								<div class="flex-it2">
+									<h6><a href="#">user98</a></h6> <span class="time">2020-05-03 14:23:32</span>
+								</div>
+								<p>我觉得不是说鸡汤不鸡汤吧，好的电影总要向世界传达某些东西。个人看来，肖申克的救赎之所以能成为多数人所认为的最经典的电影，正是因为它传达的主题hope太过壮丽宏大，以至经久不衰。况且这部电影在其他方面也没什么可以吐槽的地方</p>
+							</div>
+						</div>
+						<div class="cmt-item flex-it reply">
+							<img src="https://haintheme.com/demo/html/bustter/images/uploads/author3.png" alt="">
+							<div class="author-infor">
+								<div class="flex-it2">
+									<h6><a href="#">user1928</a></h6> <span class="time">2020-05-03 14:23:32</span>
+								</div>
+								<p>肖申克的救赎给我的感觉，一个普通的心灵鸡汤电影加上一群演技很好的演员，8分到8.5分的电影，没感觉到这么经典的神作。一个普通人的真实感觉，和各位博学多识的人无法比较，不喜勿喷。</p>
+							</div>
+						</div>
+                        <div id="fake_tab"></div>
+						<div class="cmt-item flex-it">
+							<img src="https://haintheme.com/demo/html/bustter/images/uploads/author4.png" alt="">
+							<div class="author-infor">
+								<div class="flex-it2">
+									<h6><a href="#">user6636</a></h6> <span class="time">2020-05-05 15:02:23</span>
+								</div>
+                                <p>由于求生的欲望和获取自由的渴望而产生的动力，是用简单的“毅力”所不能完全概括的。
+                                    兴趣广，未能形成自己的专长固然可惜，却也开阔了你的视野，增强了你社交的潜力。
+                                    发现自己不足是必要的，发现事物的两面性会更有帮助。
+                                    对吧？ </p>
+								<p><a class="rep-btn" href="#">+ 回复</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="comment-form">
+						<h4>发表影评评论</h4>
+						<form action="javascript:(0)" id="blog-comment">
+                            <div class="row">
+								<div class="col-md-12">
+									<textarea name="message" id="" placeholder="留下你对影评的看法吧......"></textarea>
+								</div>
+							</div>
+							<input class="submit" type="submit" placeholder="submit">
+						</form>
+					</div>
+					<!-- comment form -->
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-12 col-xs-12">
+				<div class="sidebar">
+					<div class="sb-search sb-it">
+						<h4 class="sb-title">搜索</h4>
+						<input type="text" placeholder="Enter keywords">
+					</div>
+					<div class="sb-cate sb-it">
+						<h4 class="sb-title">分类</h4>
+						<ul>
+							<li><a href="#">影评 (1)</a></li>
+							<li><a href="#">电影资讯 (0)</a></li>
+							<li><a href="#">上映信息 (0)</a></li>
+							<li><a href="#">其他 (0)</a></li>
+						</ul>
+					</div>
+
+					<div class="sb-tags sb-it">
+						<h4 class="sb-title">tags</h4>
+						<ul class="tag-items">
+							<li><a href="#">战争</a></li>
+							<li><a href="#">悬疑</a></li>
+							<li><a href="#">爱情</a></li>
+							<li><a href="#">惊悚</a></li>
+						</ul>
+					</div>
+					<div class="ads">
+						<img src="/static/images/uploads/ads1.png" alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/layui/layui.all.js"></script>
+    <script>
+        var bd = $("body");
+        bd.on("click", ".rep-btn", function () {
+            layer.open({
+                type: 1,
+                skin: 'layer-ext-myskin',
+                title: "添加评论",
+                btn: ['评论'],
+                area: ['420px', '240px'], //宽高
+                yes: function(index, layero){
+                    layer.msg("评论成功！");
+                    let date = new Date();
+                    let year = date.getFullYear();
+                    let month = date.getMonth()+1;
+                    let day = date.getDate();
+                    let h = date.getHours();
+                    let m = date.getMinutes();
+                    let ss = date.getSeconds();
+                    let t = year+'-'+month+'-'+day+' '+h+':'+m+':'+ss;
+                    s1 = '<div class="cmt-item flex-it reply" style="justify-content: flex-start;"><img src="https://haintheme.com/demo/html/bustter/images/uploads/author4.png" alt=""><div class="author-infor" style="display: inline;text-align: left;"><div class="flex-it2"><h6><a href="#">user1928</a></h6> <span class="time">'+t+'</span></div><p>我同意你的观点</p></div></div>';
+                    $("#fake_tab").append(s1);
+                    layer.close(index);
+                },
+                content: '<div class="col-md-12">' +
+                    '<textarea style="height: 130px;margin-top: 10px;padding:2px;" name="message" id="" placeholder="请输入评论内容"></textarea>' +
+                    '</div>'
+            });
+        });
+        bd.on("submit","#blog-comment",function () {
+            let s = $("#blog-comment").serialize();
+            let msg = "真的经典！！";
+            let date = new Date();
+            let year = date.getFullYear();
+            let month = date.getMonth()+1;
+            let day = date.getDate();
+            let h = date.getHours();
+            let m = date.getMinutes();
+            let ss = date.getSeconds();
+            let t = year+'-'+month+'-'+day+' '+h+':'+m+':'+ss;
+            let s1 = '<div class="cmt-item flex-it" style="justify-content: flex-start;"><img src="https://haintheme.com/demo/html/bustter/images/uploads/author4.png" alt=""><div class="author-infor"><div class="flex-it2"><h6><a href="#">user6636</a></h6> <span class="time">'+t+'</span></div><p>';
+            s1 = s1 + msg + '</p><p><a class="rep-btn" href="#">+ 回复</a></p></div></div>';
+            $(".comments").append(s1);
+        });
+    </script>
+{% endblock %}

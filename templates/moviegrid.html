@@ -1,0 +1,227 @@
+{% extends 'component/base.html' %}
+{% block content %}
+    <div class="hero common-hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="hero-ct">
+                        <h1> 电影列表 </h1>
+                        <ul class="breadcumb">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><span class="ion-ios-arrow-right"></span> movie listing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-single">
+        <div class="container">
+            <div class="row ipad-width">
+                <div class="col-md-8 col-sm-12 col-xs-12">
+                    <div class="topbar-filter">
+                        <p>共找到<span> {{ count }} </span>个电影</p>
+                        <label>排序方式:</label>
+                        <select id="order">
+                            <option value="rate DESC">评分 ↓</option>
+                            <option value="rate">评分 ↑</option>
+                            <option value="rate_num DESC">评价人数 ↓</option>
+                            <option value="rate_num">评价人数 ↑</option>
+                            <option value="time DESC">时长 ↓</option>
+                            <option value="time">时长 ↑</option>
+                            <option value="date DESC">上映日期 ↓</option>
+                            <option value="date">上映日期 ↑</option>
+                        </select>
+                        <a href="{% url 'movielist' %}" class="list"><i class="ion-ios-list-outline "></i></a>
+                        <a href="{% url 'moviegrid' %}" class="grid"><i class="ion-grid active"></i></a>
+                    </div>
+                    <div class="flex-wrap-movielist" id="movielist">
+
+                    </div>
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="sidebar">
+                    <div class="searh-form">
+						<h4 class="sb-title">找电影</h4>
+						<form class="form-style-1" action="javascript:(0)" id="form">
+							<div class="row">
+								<div class="col-md-12 form-it">
+									<label>电影名称</label>
+									<input name="mvname" type="text" placeholder="Enter keywords">
+								</div>
+								<div class="col-md-12 form-it">
+									<label>电影类型</label>
+									<div class="group-ip">
+										<select
+											name="types" multiple="" class="ui fluid dropdown">
+											<option value="剧情">剧情</option>
+					                        <option value="喜剧">喜剧</option>
+					                        <option value="动作">动作</option>
+					                        <option value="爱情">爱情</option>
+					                        <option value="惊悚">惊悚</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-12 form-it">
+                                    <label>评分</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input name="rate_down" type="text" placeholder="0">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input name="rate_up" type="text" placeholder="10">
+                                        </div>
+                                    </div>
+
+                                </div>
+								<div class="col-md-12 form-it">
+									<label>上映年份</label>
+									<div class="row">
+										<div class="col-md-6">
+                                            <input name="date_start" type="text" placeholder="1900">
+										</div>
+										<div class="col-md-6">
+											<input name="date_end" type="text" placeholder="2020">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-12 ">
+									<input class="submit" type="submit" value="查询" id="search">
+								</div>
+							</div>
+						</form>
+					</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/layui/layui.all.js"></script>
+    <script language="javascript">
+        let now_page = {{ current_page }};
+
+        $("body").on("change", "#order", function () {
+            let order = this.value;
+            console.log(order);
+            now_page = 1;
+            $.ajax({
+                type: 'get',
+                url: '/moviegridlayui/',
+                data: {'page': now_page, "ordering": order},
+                success: function (data) {
+                    $("#movielist").empty();
+                    layui.use('flow', function () {
+                        let $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+                        let flow = layui.flow;
+                        flow.load({
+                            elem: '#movielist' //指定列表容器
+                            , done: function (now_page, next) { //到达临界点（默认滚动触发），触发下一页
+                                //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+                                let lis = [];
+                                console.log(order);
+                                $.get('/moviegridlayui', {"page": now_page, "ordering": order}, function (res) {
+                                    //假设你的列表返回在data集合中
+                                    layui.each(res.movie, function (index, item) {
+                                        let s1 = '<div class=\"movie-item-style-2 movie-item-style-1\">';
+                                        s1 = s1 + '<img src="/static/imgs/small/p' + item.id + '.jpg" onerror="javascript:this.src=\'/static/imgs/small/default.png\'" alt="">';
+                                        s1 = s1 + '<div class="hvr-inner"><a href="/moviesingle/' + item.id + '"> Read more <i class="ion-android-arrow-dropright"></i> </a></div>';
+                                        s1 = s1 + '<div class="mv-item-infor"><h6><a href="#">' + item.name + '</a></h6><p class="rate"><i class="ion-android-star"></i><span>' +
+                                            item.rate + '</span> /10</p></div></div>';
+                                        lis.push(s1);
+                                    });
+                                    //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+                                    //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+                                    console.log("这是order");
+                                    console.log(now_page);
+                                    next(lis.join(''), now_page < res.pages);
+                                });
+                            }
+                        });
+                    });
+                }
+            });
+        });
+        layui.use('flow', function () {
+            let $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+            let flow = layui.flow;
+            flow.load({
+                elem: '#movielist' //指定列表容器
+                , done: function (now_page, next) { //到达临界点（默认滚动触发），触发下一页
+                    //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+                    let lis = [];
+                    $.get('/moviegridlayui?page=' + now_page, function (res) {
+                        //假设你的列表返回在data集合中
+                        layui.each(res.movie, function (index, item) {
+                            let s1 = '<div class=\"movie-item-style-2 movie-item-style-1\">';
+                            s1 = s1 + '<img src="/static/imgs/small/p' + item.id + '.jpg" onerror="javascript:this.src=\'/static/imgs/small/default.png\'" alt="">';
+                            s1 = s1 + '<div class="hvr-inner"><a href="/moviesingle/' + item.id + '"> Read more <i class="ion-android-arrow-dropright"></i> </a></div>';
+                            s1 = s1 + '<div class="mv-item-infor"><h6><a href="#">' + item.name + '</a></h6><p class="rate"><i class="ion-android-star"></i><span>' +
+                                item.rate + '</span> /10</p></div></div>';
+                            lis.push(s1);
+                        });
+                        //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+                        //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+                        next(lis.join(''), now_page < res.pages);
+                    });
+                }
+            });
+        });
+        $("#form").submit(function () {
+            let forms = $(this).serializeArray();
+            let data = {};
+            let types = '';
+            for (i in forms) {
+                if (forms[i].name === 'types') {
+                    if (types.length > 0) {
+                        types = types + ',';
+                    }
+                    types = types + forms[i].value;
+                } else {
+                    data[forms[i].name] = forms[i].value;
+                }
+            }
+            data['types'] = types;
+            now_page = 1;
+            data['offset'] = 20;
+            //console.log(data);
+            $.ajax({
+                type: 'get',
+                url: '/moviesearch',
+                data: data,
+                success: function (datas) {
+                    $("#movielist").empty();
+                    layui.use('flow', function () {
+                        let $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+                        let flow = layui.flow;
+                        now_page=1;
+                        flow.load({
+                            elem: '#movielist' //指定列表容器
+                            , done: function (now_page, next) { //到达临界点（默认滚动触发），触发下一页
+                                //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+                                let lis = [];
+                                $.get('/moviesearchlayui?page=' + now_page, datas, function (res) {
+                                    //假设你的列表返回在data集合
+                                    console.log(datas);
+                                    layui.each(res.movie, function (index, item) {
+                                        let s1 = '<div class=\"movie-item-style-2 movie-item-style-1\">';
+                                        s1 = s1 + '<img src="/static/imgs/small/p' + item.id + '.jpg" onerror="javascript:this.src=\'/static/imgs/small/default.png\'" alt="">';
+                                        s1 = s1 + '<div class="hvr-inner"><a href="/moviesingle/' + item.id + '"> Read more <i class="ion-android-arrow-dropright"></i> </a></div>';
+                                        s1 = s1 + '<div class="mv-item-infor"><h6><a href="#">' + item.name + '</a></h6><p class="rate"><i class="ion-android-star"></i><span>' +
+                                            item.rate + '</span> /10</p></div></div>';
+                                        lis.push(s1);
+                                    });
+                                    //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+                                    //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+                                    next(lis.join(''), now_page < res.count);
+                                });
+                            }
+                        });
+                    });
+                    console.log(order);
+                }
+            });
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,169 @@
+{% extends 'component/base.html' %}
+{% block content %}
+<div class="hero user-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+					<h1>{{user.username}} 的主页</h1>
+					<ul class="breadcumb">
+						<li class="active"><a href="#">Home</a></li>
+						<li> <span class="ion-ios-arrow-right"></span>个人主页</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="page-single">
+	<div class="container">
+		<div class="row ipad-width">
+			<div class="col-md-3 col-sm-12 col-xs-12">
+				<div class="user-information">
+					<div class="user-img">
+						<a href="#"><img src="https://haintheme.com/demo/html/bustter/images/uploads/user-img.png" alt=""><br></a>
+						<a href="#" class="redbtn">更换头像</a>
+					</div>
+					<div class="user-fav">
+						<p>账号信息</p>
+						<ul>
+							<li  class="active"><a href="userprofile.html">个人主页</a></li>
+							<li><a href="userfavoritelist.html">我的喜欢</a></li>
+							<li><a href="/user/comments/">我的评论</a></li>
+						</ul>
+					</div>
+                    <div class="user-fav">
+						<p>Others</p>
+						<ul>
+							<li><a href="#">修改密码</a></li>
+							<li><a href="#">注销</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-9 col-sm-12 col-xs-12">
+				<div class="form-style-1 user-pro">
+					<form action="javascript:(0)" class="user" id="userinfo">
+						<h4>01. 个人信息</h4>
+						<div class="row">
+							<div class="col-md-6 form-it">
+								<label>用户名</label>
+								<input type="text" placeholder="{{user.username}}" readonly="readonly" style="background-color: #233a50;">
+							</div>
+							<div class="col-md-6 form-it">
+								<label>邮箱</label>
+								<input name="email" id="email" type="text" placeholder="{{user.email}}">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 form-it">
+								<label>姓</label>
+								<input type="text" name="last_name" id="last_name" placeholder="{{user.last_name}}">
+							</div>
+							<div class="col-md-6 form-it">
+								<label>名</label>
+								<input type="text" name="first_name" id="first_name" placeholder="{{user.first_name}}">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 form-it">
+								<label>昵称</label>
+								<input type="text" name="nickname" id="nickname" placeholder="{{user.nickname}}">
+							</div>
+
+						</div>
+						<div class="row">
+							<div class="col-md-2">
+								<input class="submit" type="submit" value="save">
+							</div>
+						</div>	
+					</form>
+					<form action="javascript:(0)" class="password" id="password-nav">
+						<h4>02. 修改密码</h4>
+						<div class="row">
+							<div class="col-md-6 form-it">
+								<label>原密码</label>
+								<input type="text" name="pwd1" id="pwd1" placeholder="请输入原密码">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 form-it">
+								<label>新密码</label>
+								<input type="text" name="pwd2" id="pwd2" placeholder="请输入新密码">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 form-it">
+								<label>新密码</label>
+								<input type="text" id="pwd3" placeholder="请确认新密码">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-2">
+								<input class="submit" type="submit" value="change">
+							</div>
+						</div>	
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/layui/layui.all.js"></script>
+    <script>
+
+        $("#userinfo").submit(function () {
+            $.ajax({
+                type: 'get',
+                url: '/user/changeinfo/',
+                data: $(this).serialize(),
+                success: function (data) {
+                    if(data.flag) {
+                        $("#email").placehoder = data.email;
+                        $("#email").val('');
+                        $("#first_name").placehoder = data.first_name;
+                        $("#first_name").val('');
+                        $("#last_name").placehoder = data.last_name;
+                        $("#last_name").val('');
+                        $("#nickname").placehoder = data.nickname;
+                        $("#nickname").val('');
+                        layer.msg('信息修改成功！', {
+                            time: 5000, //20s后自动关闭
+                            btn: ['嗯好']
+                        });
+                        console.log("success");
+                    }else{
+                        layer.msg('啥都没变呀？！', {
+                        time: 5000, //20s后自动关闭
+                        btn: ['好吧']
+                        });
+                    }
+                }
+            })
+        });
+        $("#password-nav").submit(function () {
+            $.ajax({
+                type: 'get',
+                url: '/user/changepwd/',
+                data: $(this).serialize(),
+                success: function (data) {
+                    if(data.flag){
+                        layer.msg('密码修改成功！别忘了噢！', {
+                            time: 5000, //20s后自动关闭
+                            btn: ['知道了']
+                        });
+                    }else{
+                        layer.msg('啥都没变呀？！', {
+                            time: 5000, //20s后自动关闭
+                            btn: ['好吧']
+                        });
+                    }
+                    $("#pwd1").val('');
+                    $("#pwd2").val('');
+                    $("#pwd3").val('');
+                }
+            })
+        })
+    </script>
+{% endblock %}

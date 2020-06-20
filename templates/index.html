@@ -1,0 +1,414 @@
+{% extends 'component/base.html' %}
+{% block content %}
+<div class="slider movie-items">
+	<div class="container">
+		<div class="row">
+
+	    	<div  class="slick-multiItemSlider">
+                {% for item in hot %}
+	    		<div class="movie-item">
+	    			<div class="mv-img">
+	    				<a href="#"><img src="/static/imgs/small/p{{ item.id }}.jpg" onerror="javascript:this.src='/static/imgs/small/default.png';" alt="" width="285" height="437"></a>
+	    			</div>
+	    			<div class="title-in">
+	    				<div class="cate">
+	    					<span class="blue"><a href="#">{{item.type}}</a></span>
+	    				</div>
+	    				<h6><a href="#">{{item.name}}</a></h6>
+	    				<p><i class="ion-android-star"></i><span>{{item.rate}}</span> /10</p>
+	    			</div>
+	    		</div>
+                {% endfor %}
+
+	    	</div>
+	    </div>
+	</div>
+</div>
+<div class="movie-items">
+	<div class="container">
+		<div class="row ipad-width">
+			<div class="col-md-8">
+				<div class="title-hd">
+					<h2>国产电影</h2>
+					<a href="#" class="viewall">View all <i class="ion-ios-arrow-right"></i></a>
+				</div>
+				<div class="tabs">
+					<ul class="tab-links">
+						<li class="active"><a href="#tab1">热门</a></li>
+						<li><a href="#tab2">高分</a></li>
+						<li><a href="#tab3"> 最新 </a></li>
+						<li><a href="#tab4"> 冷门佳片</a></li>
+					</ul>
+				    <div class="tab-content">
+				        <div id="tab1" class="tab active">
+				            <div class="row">
+				            	<div class="slick-multiItem">
+                                    {% for item in mv_ch_hot %}
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="/static/imgs/small/p{{item.id}}.jpg" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+					            				<h6><a href="#">{{item.name}}</a></h6>
+					            				<p><i class="ion-android-star"></i><span>{{ item.rate }}</span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>
+                                    {% endfor %}
+				            	</div>
+				            </div>
+				        </div>
+				        <div id="tab2" class="tab">
+				           <div class="row">
+				            	<div class="slick-multiItem">
+                                    {% for item in mv_ch_rate %}
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="/static/imgs/small/p{{item.id}}.jpg" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+					            				<h6><a href="#">{{item.name}}</a></h6>
+					            				<p><i class="ion-android-star"></i><span>{{ item.rate }}</span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>
+                                    {% endfor %}
+				            	</div>
+				            </div>
+				        </div>
+				        <div id="tab3" class="tab">
+				        	<div class="row">
+				            	<div class="slick-multiItem">
+                                    {% for item in mv_ch_new %}
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="/static/imgs/small/p{{item.id}}.jpg" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+					            				<h6><a href="#">{{item.name}}</a></h6>
+					            				<p><i class="ion-android-star"></i><span>{{ item.rate }}</span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>
+                                    {% endfor %}
+				            	</div>
+				            </div>
+			       	 	</div>
+			       	 	<div id="tab4" class="tab">
+				        	<div class="row">
+				            	<div class="slick-multiItem">
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="/static/images/uploads/mv-item5.jpg" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+					            				<h6><a href="#">Interstellar</a></h6>
+					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>
+									<div class="slide-it">
+										<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="/static/images/uploads/mv-item6.jpg" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+					            				<h6><a href="#">The revenant</a></h6>
+					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+					            			</div>
+					            		</div>
+									</div>
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="/static/images/uploads/mv-item7.jpg" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+					            				<h6><a href="#">Die hard</a></h6>
+					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="/static/images/uploads/mv-item8.jpg" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+					            				<h6><a href="#">The walk</a></h6>
+					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="/static/images/uploads/mv-item3.jpg" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+					            				<h6><a href="#">Die hard</a></h6>
+					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>
+				            	</div>
+				            </div>
+			       	 	</div>
+				    </div>
+				</div>
+				<div class="title-hd">
+					<h2>外国电影</h2>
+					<a href="#" class="viewall">View all <i class="ion-ios-arrow-right"></i></a>
+				</div>
+				<div class="tabs">
+					<ul class="tab-links">
+						<li class="active"><a href="#tab5">热门</a></li>
+						<li><a href="#tab6">高分</a></li>
+						<li><a href="#tab7"> 最新 </a></li>
+						<li><a href="#tab8"> 冷门佳片</a></li>
+					</ul>
+				    <div class="tab-content">
+				        <div id="tab5" class="tab active">
+				            <div class="row">
+				            	<div class="slick-multiItem">
+                                    {% for item in mv_fr_hot %}
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="/static/imgs/small/p{{item.id}}.jpg" onerror="javascript:this.src='/static/imgs/small/default.png';" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="{% url "moviesingle" item.id %}"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+					            				<h6><a href="#">{{item.name}}</a></h6>
+					            				<p><i class="ion-android-star"></i><span>{{ item.rate }}</span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>
+                                    {% endfor %}
+				            	</div>
+				            </div>
+				        </div>
+				        <div id="tab6" class="tab">
+				           <div class="row">
+				            	<div class="slick-multiItem">
+                                    {% for item in mv_fr_rate %}
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="/static/imgs/small/p{{item.id}}.jpg" onerror="javascript:this.src='/static/imgs/small/default.png';" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+					            				<h6><a href="#">{{item.name}}</a></h6>
+					            				<p><i class="ion-android-star"></i><span>{{ item.rate }}</span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>
+                                    {% endfor %}
+				            	</div>
+				            </div>
+				        </div>
+				        <div id="tab7" class="tab">
+				        	<div class="row">
+				            	<div class="slick-multiItem">
+                                    {% for item in mv_fr_new %}
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="/static/imgs/small/p{{item.id}}.jpg" onerror="javascript:this.src='/static/imgs/small/default.png';" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+					            				<h6><a href="#">{{item.name}}</a></h6>
+					            				<p><i class="ion-android-star"></i><span>{{ item.rate }}</span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>
+                                    {% endfor %}
+				            	</div>
+				            </div>
+			       	 	</div>
+			       	 	<div id="tab8" class="tab">
+				        	<div class="row">
+				            	<div class="slick-multiItem">
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="/static/images/uploads/mv-item5.jpg" onerror="javascript:this.src='/static/imgs/small/default.png';" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+					            				<h6><a href="#">Interstellar</a></h6>
+					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>
+									<div class="slide-it">
+										<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="/static/images/uploads/mv-item6.jpg" onerror="javascript:this.src='/static/imgs/small/default.png';" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+					            				<h6><a href="#">The revenant</a></h6>
+					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+					            			</div>
+					            		</div>
+									</div>
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="/static/images/uploads/mv-item7.jpg" onerror="javascript:this.src='/static/imgs/small/default.png';" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+					            				<h6><a href="#">Die hard</a></h6>
+					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="/static/images/uploads/mv-item8.jpg" onerror="javascript:this.src='/static/imgs/small/default.png';" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+					            				<h6><a href="#">The walk</a></h6>
+					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>
+				            		<div class="slide-it">
+				            			<div class="movie-item">
+					            			<div class="mv-img">
+					            				<img src="/static/images/uploads/mv-item3.jpg" onerror="javascript:this.src='/static/imgs/small/default.png';" alt="" width="185" height="284">
+					            			</div>
+					            			<div class="hvr-inner">
+					            				<a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+					            			</div>
+					            			<div class="title-in">
+					            				<h6><a href="#">Die hard</a></h6>
+					            				<p><i class="ion-android-star"></i><span>7.4</span> /10</p>
+					            			</div>
+					            		</div>
+				            		</div>
+				            	</div>
+				            </div>
+			       	 	</div>
+				    </div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="sidebar">
+					<div class="celebrities">
+						<h4 class="sb-title" style="color:#abb7c4">一周口碑榜</h4>
+						{% for item in week %}
+                        <div class="celeb-item">
+
+							<div class="celeb-author">
+                                <h6><a href="#"><u>{{ forloop.counter }}  {{ item.name}}</u></a></h6>
+							</div>
+						</div>
+						{% endfor %}
+                        <a href="#" class="btn">查看所有榜单<i class="ion-ios-arrow-right"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- latest new v1 section-->
+<div class="latestnew">
+	<div class="container">
+		<div class="row ipad-width">
+			<div class="col-md-8">
+				<div class="title-hd">
+					<h2>最受欢迎影评</h2>
+				</div>
+				<div class="tabs">
+				    <div class="tab-content">
+                        {% for item in comment_args %}
+				        <div id="tab31" class="tab active" style="margin-bottom: 20px;">
+				            <div class="row">
+				            	<div class="blog-item-style-1">
+				            		<img src="/static/imgs/small/p{{ item.mvid }}.jpg " onerror="javascript:this.src='/static/imgs/small/default.png';">
+				            		<div class="blog-it-infor">
+				            			<h3><a href="#">{{ item.username }} 对 <<{{ item.mvname }}>> 的评价</a></h3>
+                                        <div>
+                                            <span class="time">{{ item.cmt.time }}</span>
+                                            <span class="favor-num"><span class="favor">赞</span> {{ item.cmt.favor_num }} <span class="oppo">踩</span> {{ item.cmt.oppo_num }}</span>
+                                        </div>
+				            			    <p>{{ item.cmt.comment }}</p>
+				            		</div>
+				            	</div>
+				            </div>
+				        </div>
+                        {% endfor %}
+				    </div>
+				</div>
+
+			</div>
+			<div class="col-md-4">
+				<div class="sidebar">
+					<div class="sb-facebook sb-it">
+						<h4 class="sb-title">合作联系</h4>
+						<p>电影合作邮箱：movie@jackkwin.com</p>
+                        <p>网站开发合作邮箱：site@jackkwin.com</p>
+                        <p>影人PRO合作邮箱：pro@jackkwin.com</p>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+<!--end of latest new v1 section-->
+<!-- footer section-->
+
+

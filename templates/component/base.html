@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7 no-js" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8 no-js" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en" class="no-js">
+<head>
+    <!-- Basic need -->
+    <title>个性化电影资讯网站</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <link rel="profile" href="#">
+    <!--Google Font-->
+    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500%7CNunito:300,400,600'/>
+    <!-- Mobile specific meta -->
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone-no">
+    <!-- CSS files -->
+    <link rel="stylesheet" href="/static/css/plugins.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/js/layui/css/layui.css">
+
+</head>
+<body>
+<!--preloading-->
+<div id="preloader">
+    <img class="logo" src="/static/images/logo1.png" alt="" width="119" height="58">
+    <div id="status">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+
+<div class="login-wrapper" id="login-content">
+    <div class="login-content">
+        <a href="#" class="close">x</a>
+        <h3>登录</h3>
+        <form method="post" action="javascript:(0)" id="loginform">
+            <div class="row">
+                <label for="username">
+                    用户名:
+                    <input type="text" name="username" id="username" placeholder="请输入用户名"
+                            required="required"/>
+                </label>
+            </div>
+
+            <div class="row">
+                <label for="password">
+                    密码:
+                    <input type="password" name="password" id="password" placeholder="请输入密码"
+                           required="required"/>
+                    <!--pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"-->
+                </label>
+            </div>
+            <div class="row">
+                <div class="remember">
+                    <div>
+                        <input type="checkbox" name="remember" value="Remember me"><span>记住我</span>
+                    </div>
+                    <a href="#">忘记密码?</a>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit">登录</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+<!--end of login form popup-->
+<!--signup form popup-->
+<div class="login-wrapper" id="signup-content">
+    <div class="login-content">
+        <a href="#" class="close">x</a>
+        <h3>注册</h3>
+        <form method="post" action="javascript:(0)" id="register">
+            <div class="row">
+                <label for="username-2">
+                    用户名:
+                    <input type="text" name="username" id="username-2" placeholder="请输入用户名" required="required"/>
+                </label>
+            </div>
+
+            <div class="row">
+                <label for="email-2">
+                    邮箱:
+                    <input type="password" name="email" id="email-2" placeholder="请输入邮箱"
+                           required="required"/>
+                    <!-- pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"  -->
+                </label>
+            </div>
+            <div class="row">
+                <label for="password-2">
+                    密码:
+                    <input type="password" name="password" id="password-2" placeholder="请输入密码"
+                           required="required"/>
+                </label>
+            </div>
+            <div class="row">
+                <label for="repassword-2">
+                    确认密码:
+                    <input type="password" name="password" id="repassword-2" placeholder="确认密码"
+                           required="required"/>
+                </label>
+            </div>
+            <div class="row">
+                <button type="submit">注册</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!--end of signup form popup-->
+
+<!-- BEGIN | Header -->
+<header class="ht-header">
+    <div class="container">
+        <nav class="navbar navbar-default navbar-custom">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header logo">
+                <div class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <div id="nav-icon1">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <a href="../index.html"><img class="logo" src="/static/images/logo1.png" alt="" width="119"
+                                          height="58"></a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav flex-child-menu menu-left">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="dropdown first">
+                        <a class="btn btn-default dropdown-toggle lv1" href="{% url "index" %}">
+                            首页
+                        </a>
+                    </li>
+                    <li class="dropdown first">
+                        <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
+                            电影<i class="fa fa-angle-down" aria-hidden="true"></i>
+                        </a>
+                        <ul class="dropdown-menu level1">
+                            <li><a href="{% url "movielist" %}">电影列表</a></li>
+                            <li><a href="{% url "moviegrid" %}">电影网格</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="dropdown first">
+                        <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
+                            影评 <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        </a>
+                        <ul class="dropdown-menu level1">
+                            <li><a href="{% url "bloglist" %}">影评列表</a></li>
+                            <li><a href="../bloggrid.html">影评网格</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav flex-child-menu menu-right" id="user-nav" data-role="listview">
+                    <!--<li class="dropdown first">
+                        <a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
+                            pages <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        </a>
+                        <ul class="dropdown-menu level1">
+                            <li><a href="../landing.html">Landing</a></li>
+                            <li><a href="../404.html">404 Page</a></li>
+                            <li class="it-last"><a href="../comingsoon.html">Coming soon</a></li>
+                        </ul>
+                    </li>-->
+                    {% if is_login == "true" %}
+                        <li><a href="#">帮助</a></li>
+                        <li class="dropdown first"><a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown"
+                                                      data-hover="dropdown">{{user.username}}<i class="fa fa-angle-down"
+                                                                                        aria-hidden="true"></i></a>
+                            <ul class="dropdown-menu level1">
+                                <li><a href="{% url "userprofile" %}">个人中心</a></li>
+                                <li><a href="{% url "logout" %}" id="logout">注销</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li><a href="#">帮助</a></li>
+                        <li class="loginLink"><a href="#">登录</a></li>
+                        <li class="btn signupLink"><a href="#">注册</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <!-- top search form -->
+        <div class="top-search">
+            <select>
+                <option value="united">电影搜索</option>
+                <option value="saab">Others</option>
+            </select>
+            <input type="text" placeholder="查找你想要的电影吧......">
+        </div>
+    </div>
+</header>
+
+{% block content %}
+{% endblock %}
+
+<footer class="ht-footer">
+	<div class="container">
+		<div class="flex-parent-ft">
+			<div class="flex-child-ft item1">
+				 <a href="index.html"><img class="logo" src="/static/images/logo1.png" alt=""></a>
+				 <p>5th Avenue st, manhattan<br>
+				New York, NY 10001</p>
+				<p>Call us: <a href="#">(+01) 202 342 6789</a></p>
+			</div>
+			<div class="flex-child-ft item2">
+				<h4>Resources</h4>
+				<ul>
+					<li><a href="#">About</a></li>
+					<li><a href="#">Blockbuster</a></li>
+					<li><a href="#">Contact Us</a></li>
+					<li><a href="#">Forums</a></li>
+					<li><a href="#">Blog</a></li>
+					<li><a href="#">Help Center</a></li>
+				</ul>
+			</div>
+			<div class="flex-child-ft item3">
+				<h4>Legal</h4>
+				<ul>
+					<li><a href="#">Terms of Use</a></li>
+					<li><a href="#">Privacy Policy</a></li>
+					<li><a href="#">Security</a></li>
+				</ul>
+			</div>
+			<div class="flex-child-ft item4">
+				<h4>Account</h4>
+				<ul>
+					<li><a href="#">My Account</a></li>
+					<li><a href="#">Watchlist</a></li>
+					<li><a href="#">Collections</a></li>
+					<li><a href="#">User Guide</a></li>
+				</ul>
+			</div>
+			<div class="flex-child-ft item5">
+				<h4>Newsletter</h4>
+				<p>Subscribe to our newsletter system now <br> to get latest news from us.</p>
+				<form action="#">
+					<input type="text" placeholder="Enter your email...">
+				</form>
+				<a href="#" class="btn">Subscribe now <i class="ion-ios-arrow-forward"></i></a>
+			</div>
+		</div>
+	</div>
+	<div class="ft-copyright">
+		<div class="ft-left">
+			<p>© 2017 Blockbuster. All Rights Reserved. Designed by <a href="http://tyson.fun"> 泰森机场</a> </p>
+		</div>
+		<div class="backtotop">
+			<p><a href="#" id="back-to-top">Back to top  <i class="ion-ios-arrow-thin-up"></i></a></p>
+		</div>
+	</div>
+</footer>
+<!-- end of footer section-->
+
+<script src="/static/js/jquery.js"></script>
+<script src="/static/js/jquery-3.4.1.js"></script>
+<script src="/static/js/plugins.js"></script>
+<script src="/static/js/plugins2.js"></script>
+<script src="/static/js/custom.js"></script>
+<script src="/static/js/bootstrap-paginator.min.js"></script>
+<script src="/static/js/layui/layui.all.js"></script>
+<style>
+    body .demo-class .layui-layer-btn0{
+        color:red;
+    }
+</style>
+<script>
+    layer.config({
+        extend: 'style.css', //加载新皮肤
+         //一旦设定，所有弹层风格都采用此主题。
+    });
+    let index=0;
+    //let is_login={{ is_login }};
+    $("body").on("submit","#loginform",function () {
+        let form = $(this).serialize();
+        $.ajax({
+            type:'get',
+            url:'/login/',
+            data:form,
+            success:function (data) {
+                if(data.flag === 'fail'){
+                    layer.msg('用户名或密码错误，请重新输入', {
+                        time: 5000, //20s后自动关闭
+                        btn: ['知道了'],
+                        skin: 'layer-ext-myskin'
+                    });
+                }else{
+                    $("#user-nav").empty();
+                    //console.log(data.username);
+                    window.location.reload();
+                    {#var overlay = $(".overlay");#}
+		            {#overlay.removeClass("openform");#}
+                    {#let s1 = '<li><a href=\"#\">帮助</a></li>';#}
+                    {#s1 = s1 + '<li class="dropdown first"><a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">';#}
+                    {#s1 = s1 + data.username + '<i class="fa fa-angle-down" aria-hidden="true"></i></a>';#}
+                    {#s1 = s1 + '<ul class="dropdown-menu level1">';#}
+                    {#s1 = s1 + '<li><a href="">个人中心</a></li>';#}
+                    {#s1 = s1 + '<li><a href="javascript:(0)" id="logout">注销</a></li></ul></li>';#}
+                    {#console.log(s1);#}
+                    {#$("#user-nav").append(s1);#}
+                }
+            }
+        })
+    });
+    $("body").on('click','.search-img',function () {
+        if ($(this).hasClass('border')) {
+            $(this).removeClass('border');
+        } else {
+            $(this).addClass('border');
+        }
+        console.log(this.className)
+    });
+    $("body").on('click','#close-research',function () {
+        layer.close(index)
+    });
+    $("body").on("submit","#register",function () {
+        let form = $(this).serialize();
+        $.ajax({
+            type:'get',
+            url:'/register/',
+            data:form,
+            success:function (data) {
+                if(data.flag === 'fail'){
+                    layer.msg('用户名已存在！', {
+                        time: 5000,
+                        btn: ['知道了'],
+                        skin: 'layer-ext-myskin'
+                    });
+                }else{
+                    $("#user-nav").empty();
+                    //console.log(data.username);
+                    var overlay = $(".overlay");
+		            overlay.removeClass("openform");
+                    let s1 = '<li><a href=\"#\">帮助</a></li>';
+                    s1 = s1 + '<li class="dropdown first"><a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">';
+                    s1 = s1 + 'test0' + '<i class="fa fa-angle-down" aria-hidden="true"></i></a>';
+                    s1 = s1 + '<ul class="dropdown-menu level1">';
+                    s1 = s1 + '<li><a href="">个人中心</a></li>';
+                    s1 = s1 + '<li><a href="{% url "logout" %}" id="logout">注销</a></li></ul></li>';
+                    console.log(s1);
+                    $("#user-nav").append(s1);
+                }
+                index= layer.open({
+                type: 1,
+                skin: 'layui-layer-rim', //加上边框
+                area: ['720px', '640px'], //宽高
+                title: ["快来选一选你看过的电影吧",'font-size:16px;font-weight:bold;'],
+                content: '<div class="col-md-3" style="margin-top:15px"><img src="/static/imgs/small/p1.jpg" class="search-img"><p style="text-align: center;color:black">肖申克的救赎</p></div>\n' +
+                    '<div class="col-md-3" style="margin-top:15px"><img src="/static/imgs/small/p4.jpg" class="search-img"><p style="text-align: center;color:black">盗梦空间</p></div>\n' +
+                    '<div class="col-md-3" style="margin-top:15px"><img src="/static/imgs/small/p6.jpg" class="search-img"><p style="text-align: center;color:black">泰坦尼克号</p></div>\n' +
+                    '<div class="col-md-3" style="margin-top:15px"><img src="/static/imgs/small/p8.jpg" class="search-img"><p style="text-align: center;color:black">千余千寻</p></div>\n' +
+                    '<div class="col-md-3" style="margin-top:15px"><img src="/static/imgs/small/p9.jpg" class="search-img"><p style="text-align: center;color:black">三傻大闹宝莱坞</p></div>\n' +
+                    '<div class="col-md-3" style="margin-top:15px"><img src="/static/imgs/small/p10.jpg" class="search-img"><p style="text-align: center;color:black">流浪地球</p></div>\n' +
+                    '<div class="col-md-3" style="margin-top:15px"><img src="/static/imgs/small/p12.jpg" class="search-img"><p style="text-align: center;color:black">疯狂动物城</p></div>\n' +
+                    '<div class="col-md-3" style="margin-top:15px"><img src="/static/imgs/small/p134.jpg" class="search-img"><p style="text-align: center;color:black">飞越疯人院</p></div>\n' +
+                    '<button type="button" class="layui-btn layui-btn-danger" style="margin:10px 150px 0 130px;text-align:center;" id="adjust-recommend">够了，就选这些吧</button>' +
+                    '<button type="button" class="layui-btn layui-btn-warm" id="close-research" style="margin:10px 0px 0 0px;text-align:center;">接着选，有更好的推荐噢</button>'
+                });
+
+            }
+        });
+    });
+    $("body").on("click","#adjust-recommend",function () {
+        window.location.href= "/adjustRecommend/";
+    })
+</script>
+<style>
+    .border{border:4px solid red;}
+</style>
+</body>
+</html>

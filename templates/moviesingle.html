@@ -1,0 +1,398 @@
+{% extends 'component/base.html' %}
+{% block content %}
+    <div class="hero mv-single-hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- <h1> movie listing - list</h1>
+                    <ul class="breadcumb">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li> <span class="ion-ios-arrow-right"></span> movie listing</li>
+                    </ul> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-single movie-single movie_single" id="mvsingle">
+        <div class="container">
+            <div class="row ipad-width2">
+                <div class="col-md-4 col-sm-12 col-xs-12">
+                    <div class="movie-img sticky-sb">
+                        <img src="/static/imgs/small/p{{ movie.id }}.jpg" alt="">
+
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-12 col-xs-12">
+                    <div class="movie-single-ct main-content">
+                        <h1 class="bd-hd">{{ movie.name }}<span
+                                style="margin-left: 20px">{{ movie.date | date:"Y-m-d" }}</span></h1>
+                        <div class="social-btn">
+                            <a href="#" class="parent-btn"><i class="ion-heart"></i>添加到喜欢 </a>
+                        </div>
+                        <div class="movie-rate">
+                            <div class="rate">
+                                <i class="ion-android-star"></i>
+                                <p><span>{{ movie.rate }}</span> /10<br>
+                                    <span class="rv">{{ movie.rate_num }}人评价</span>
+                                </p>
+                            </div>
+                            <div class="rate-star">
+                                <p>我要评分: </p>
+                                <div id="rate-star"></div>
+                            </div>
+                        </div>
+                        <div class="movie-tabs">
+                            <div class="tabs">
+                                <ul class="tab-links tabs-mv">
+                                    <li class="active"><a href="#overview">概览</a></li>
+                                    <li><a href="#reviews">评价</a></li>
+                                    <li><a href="#moviesrelated">相关电影</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="overview" class="tab active">
+                                        <div class="row">
+                                            <div class="col-md-8 col-sm-12 col-xs-12">
+                                                <p>{{ movie.intro }}</p>
+                                                <div class="title-hd-sm">
+                                                    <h4>精选评价</h4>
+                                                    <a href="#" class="time">查看所有评论<i
+                                                            class="ion-ios-arrow-right"></i></a>
+                                                </div>
+                                                <!-- movie user review -->
+                                                <div class="mv-user-review-item">
+                                                    <h3>user657 的评论</h3>
+                                                    <div class="no-star">
+                                                        <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star"></i>
+                                                        <i class="ion-android-star last"></i>
+                                                    </div>
+                                                    <p class="time">
+                                                        2020-05-19 by <a href="#"> user657</a>
+                                                    </p>
+                                                    <p>久闻其名；躺在我硬盘里很久了一直没看；有些鸟儿是你用笼子关不住的，它的光芒迟早会让它飞走；自由，只有曾失去过自由的人才会在重获自由的那一刹那会张开双臂仰天大啸。</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-xs-12 col-sm-12">
+                                                <div class="sb-it">
+                                                    <h6>导演: </h6>
+                                                    <p><a href="#">{{ movie.director }}</a></p>
+                                                </div>
+                                                <div class="sb-it">
+                                                    <h6>编剧: </h6>
+                                                    <p><a href="#">{{ movie.writer }}</a></p>
+                                                </div>
+                                                <div class="sb-it">
+                                                    <h6>主演: </h6>
+                                                    <p>
+                                                        {% for item in actor %}
+                                                            {% if forloop.counter <= 3 %}
+                                                                <a>{{ item }}</a>
+                                                            {% endif %}
+                                                            {% if forloop.counter < 3 %}
+                                                                <a>/</a>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </p>
+                                                </div>
+                                                <div class="sb-it">
+                                                    <h6>类型:</h6>
+                                                    <p><a href="#">{{ movie.type }}</a></p>
+                                                </div>
+                                                <div class="sb-it">
+                                                    <h6>上映日期:</h6>
+                                                    <p>{{ movie.date | date:"Y-m-d" }}</p>
+                                                </div>
+                                                <div class="sb-it">
+                                                    <h6>总时长:</h6>
+                                                    <p>{{ movie.time }}</p>
+                                                </div>
+                                                <div class="sb-it">
+                                                    <h6>评分:</h6>
+                                                    <p>{{ movie.rate }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="reviews" class="tab review">
+                                        <div class="row">
+                                            <div class="rv-hd">
+                                                <div class="div">
+
+                                                    <h2>{{ movie.name }}</h2>
+                                                </div>
+                                                <a href="#" class="redbtn">写短评</a>
+                                            </div>
+                                            <div class="topbar-filter">
+                                                <p>共找到<span>{{ comment_num }}</span>条评论</p>
+                                                <label>排序方式:</label>
+                                                <select>
+                                                    <option value="popularity">发表时间 ↓</option>
+                                                    <option value="popularity">Popularity Ascending</option>
+                                                    <option value="rating">Rating Descending</option>
+                                                    <option value="rating">Rating Ascending</option>
+                                                    <option value="date">Release date Descending</option>
+                                                    <option value="date">Release date Ascending</option>
+                                                </select>
+                                            </div>
+                                            <div id="comment-content">
+                                            {% for sub in comment %}
+										        <div class="mv-user-review-item">
+											        <div class="user-infor">
+												    <div>
+													    <h3>{{ sub.uid }} 的评论</h3>
+													    <div class="no-star" id="no-star">
+                                                            {% if sub.rate == 10 %}<i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i>{% endif %}
+                                                            {% if sub.rate == 9 %}<i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star last"></i>{% endif %}
+                                                            {% if sub.rate == 8 %}<i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i>{% endif %}
+                                                            {% if sub.rate == 7 %}<i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i>{% endif %}
+                                                            {% if sub.rate == 6 %}<i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i>{% endif %}
+                                                            {% if sub.rate == 5 %}<i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i>{% endif %}
+                                                            {% if sub.rate == 4 %}<i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i>{% endif %}
+                                                            {% if sub.rate == 3 %}<i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i>{% endif %}
+                                                            {% if sub.rate == 2 %}<i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i>{% endif %}
+                                                            {% if sub.rate == 1 %}<i class="ion-android-star"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i>{% endif %}
+                                                            {% if sub.rate == 0 %}<i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i><i class="ion-android-star last"></i>{% endif %}
+													    </div>
+													    <p class="time">
+														    {{sub.time | date:"Y-m-d H:m:s"}}
+													    </p>
+												    </div>
+											        </div>
+											    <p>{{ sub.comment }}</p>
+										        </div>
+                                            {% endfor %}
+                                            </div>
+                                            <div class="topbar-filter" style="justify-content: space-around;">
+                                                <label>Reviews per page:</label>
+                                                <select>
+                                                    <option value="range">5 Reviews</option>
+                                                    <option value="saab">10 Reviews</option>
+                                                </select>
+                                                <div class="pagination2" id="page-nav" style="padding-left: 0px;float: left;">
+                                                    {% for i in page_range %}
+                                                        {% if i == current_page %}
+                                                            <a class="active">{{ i }}</a>
+                                                        {% else %}
+                                                            <a href="javascript:(0)" class="click_page">{{ i }}</a>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    <a href="javascript:(0)" class="click_page">&gt;&gt;</a>
+                                                </div>
+
+                                            </div>
+                                            <div class="blog-detail-ct">
+                                                <div class="comment-form">
+                                                    <h4>我要评价</h4>
+                                                    <form action="javascript:(0)" id="shortcomment-submit">
+                                                        <div class="row">
+                                                            <div class="col-md-9">
+                                                            <textarea name="message" id="shortcomment"
+                                                                      placeholder="说点什么吧......"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <input class="submit" type="submit" placeholder="submit">
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="moviesrelated" class="tab">
+                                        <div class="row">
+                                            <h3>相关电影</h3>
+                                            <h2>肖申克的救赎</h2>
+                                            <div class="topbar-filter">
+                                                <p>共 10 部电影</p>
+                                                <label>Sort by:</label>
+                                                <select>
+                                                    <option value="popularity">发布时间 ↓</option>
+                                                    <option value="popularity">Popularity Ascending</option>
+                                                    <option value="rating">Rating Descending</option>
+                                                    <option value="rating">Rating Ascending</option>
+                                                    <option value="date">Release date Descending</option>
+                                                    <option value="date">Release date Ascending</option>
+                                                </select>
+                                            </div>
+                                            {% for item in related_movie %}
+                                            <div class="movie-item-style-2">
+                                                <img src="/static/imgs/small/p{{ item.id }}.jpg" alt="">
+                                                <div class="mv-item-infor">
+                                                    <h6><a href="#">{{ item.name }}</a></h6>
+                                                    <p class="rate"><i class="ion-android-star"></i><span>{{ item.rate }}</span> /10
+                                                    </p>
+                                                    <p class="describe">{{ item.intro }}</p>
+                                                    <p class="run-time"> 时长: {{ item.time }} min .
+                                                        <span>上映日期：{{ item.date | date:"Y-m-d" }}</span></p>
+                                                    <p>导演: <a href="#">{{ item.director }}</a></p>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+
+                                            <div class="topbar-filter">
+                                                <label>每页</label>
+                                                <select>
+                                                    <option value="range">5 部电影</option>
+                                                    <option value="saab">10 部电影</option>
+                                                </select>
+                                                <div class="pagination2">
+                                                    <span>Page 1 of 2:</span>
+                                                    <a class="active" href="#">1</a>
+                                                    <a href="#">2</a>
+                                                    <a href="#"><i class="ion-arrow-right-b"></i></a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/jquery-3.4.1.js"></script>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/layui/layui.all.js"></script>
+    <script>
+    var is_login = {{ is_login }};
+        $(function () {
+            $("body").on('click', '.click_page', function () {
+                let page = $(this).html();
+                if (page === '&lt;&lt;') {
+                    page = '1';
+                }
+                if (page === '&gt;&gt;') {
+                    page = '{{ page_num }}';
+                }
+                //console.log(page);
+                let url = '/moviesinglepage/' +{{ movie.id }};
+                $.ajax({
+                    type: 'get',
+                    url: url,
+                    data: {'page': page},
+                    success: function (data) {
+                        $("#comment-content").empty();
+                        //因为这里data内部仍然是一个dict，所以要用data.cmt取出其中的cmt属性
+                        $.each(data.cmt, function (index, item) {
+                            //console.log(item.rate);
+                            let s1 = '<div class="mv-user-review-item"><div class="user-infor"><div><h3>' + item.id + '</h3><div class="no-star" id="no-star">';
+                            for (let i = 1; i <= item.rate; i++) {
+                                //console.log("star");
+                                s1 = s1 + '<i class="ion-android-star"></i>';
+                            }
+                            for (let i = item.rate + 1; i <= 10; i++) {
+                                //console.log("nostar");
+                                s1 = s1 + '<i class="ion-android-star last"></i>';
+                            }
+                            s1 = s1 + '</div><p class="time">';
+                            t = new Date(item.time).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+                            s1 = s1 + t + "</p></div></div><p>" + item.comment + "</p></div>";
+                            //console.log(s1);
+                            $("#comment-content").append(s1);
+                        });
+                        $("#page-nav").html('');
+                        //console.log(typeof(page));
+                        let s = '';
+                        if (Number(page) > 1) {
+                            $("#page-nav").append('<a href="javascript:(0)" class="click_page">&lt;&lt;</a>');
+                        }
+                        $.each(data.page_range, function (index, i) {
+                            //console.log(typeof(i));
+
+                            if (i === Number(page)) {
+                                s = '<a href="#" class="page-active" style="color: #dcf836;">' + i + '</a>';
+                            } else {
+                                s = '<a href="javascript:(0)" class="click_page">' + i + '</a>';
+                            }
+                            console.log(s);
+                            $("#page-nav").append(s);
+                        });
+                        if (Number(page) < {{ page_num }}) {
+                            $("#page-nav").append('<a href="javascript:(0)" class="click_page">&gt;&gt;</a>');
+                        }
+                        $("#active").addClass("active");
+                    }
+                });
+            });
+        });
+        layui.use('rate', function () {
+            var rate = layui.rate;
+            var mvid = 1;
+            let usr_rate = {{ usr_rate }};
+            var ins1 = rate.render({
+                elem: '#rate-star',
+                length: 10,
+                value: usr_rate,
+                theme: '#f5b50a',
+                choose: function (value) {
+                    $.ajax({
+                        type: 'get',
+                        url: '/rate/',
+                        data: {'rate': value, 'mvid': mvid},
+                        success: function (data) {
+                            layer.msg('评分成功！', {
+                                time: 1000,
+                                skin: 'layer-ext-myskin'
+                            });
+                        }
+                    })
+                }
+            });
+        });
+        $("body").on("submit", "#shortcomment-submit", function () {
+            let content = $("#shortcomment").val();
+            if (content === '') {
+                layer.msg('请输入评论！', {
+                    time: 1000,
+                    button: ['好的'],
+                    skin: 'layer-ext-myskin'
+                });
+            } else if (!is_login) {
+                var overlay = $(".overlay");
+                var loginct = $("#login-content");
+                loginct.parents(overlay).addClass("openform");
+                $(document).on('click', function (e) {
+                    var target = $(e.target);
+                    if ($(target).hasClass("overlay")) {
+                        $(target).find(loginct).each(function () {
+                            $(this).removeClass("openform");
+                        });
+                        setTimeout(function () {
+                            $(target).removeClass("openform");
+                        }, 350);
+                    }
+                });
+            } else {
+                $.ajax({
+                    type: 'get',
+                    url: '/shortcomment/',
+                    data: {'content': content, 'mvid':{{mvid}}},
+                    success: function () {
+                        layer.msg('评论成功！', {
+                            time: 1000,
+                            skin: 'layer-ext-myskin'
+                        });
+                    }
+                });
+            }
+        });
+
+
+    </script>
+    <style>
+        .topbar-filter .pagination2 a.active,
+        .topbar-filter .pagination2 a:hover {
+            color: #dcf836;
+        }
+
+    </style>
+{% endblock %}
